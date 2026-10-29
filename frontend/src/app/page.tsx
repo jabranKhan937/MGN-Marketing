@@ -23,8 +23,8 @@ import { X, Send, CheckCircle2, Sparkles } from 'lucide-react';
 export default function HomePage() {
   const [activeView, setActiveView] = useState<'showcase' | 'clients' | 'portal'>('showcase');
   const [currency, setCurrency] = useState<CurrencyCode>('AED');
-  // Default to Luxhabitat's signature crisp editorial light aesthetic (can toggle to Dark anytime)
-  const [isDark, setIsDark] = useState(false);
+  // Default to MGN Marketing's signature luxury dark theme (can toggle to Light anytime)
+  const [isDark, setIsDark] = useState(true);
 
   const [properties, setProperties] = useState<Property[]>([]);
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -74,6 +74,12 @@ export default function HomePage() {
   useEffect(() => {
     fetchAllData();
   }, [fetchAllData]);
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.toggle('dark', isDark);
+    }
+  }, [isDark]);
 
   const handleOpenQuickInquiry = (note = '') => {
     setQuickNote(note);

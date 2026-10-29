@@ -335,10 +335,18 @@ export default function HeroShowcase({
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="w-full lg:max-w-xl bg-white/95 dark:bg-neutral-950/95 text-neutral-900 dark:text-white p-3 backdrop-blur-md border border-neutral-200/80 dark:border-neutral-800 shadow-2xl"
+              className={`w-full lg:max-w-xl p-3 backdrop-blur-md border shadow-2xl ${
+                isDark
+                  ? 'bg-neutral-950/95 text-white border-neutral-800'
+                  : 'bg-white/95 text-neutral-900 border-neutral-200/80'
+              }`}
             >
               <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
-                <div className="sm:col-span-5 px-3 py-2 border-b sm:border-b-0 sm:border-r border-neutral-200 dark:border-neutral-800">
+                <div
+                  className={`sm:col-span-5 px-3 py-2 border-b sm:border-b-0 sm:border-r ${
+                    isDark ? 'border-neutral-800' : 'border-neutral-200'
+                  }`}
+                >
                   <label className="text-[10px] uppercase tracking-[0.18em] text-neutral-400 block">
                     Location
                   </label>
@@ -355,7 +363,11 @@ export default function HeroShowcase({
                   </select>
                 </div>
 
-                <div className="sm:col-span-4 px-3 py-2 border-b sm:border-b-0 sm:border-r border-neutral-200 dark:border-neutral-800">
+                <div
+                  className={`sm:col-span-4 px-3 py-2 border-b sm:border-b-0 sm:border-r ${
+                    isDark ? 'border-neutral-800' : 'border-neutral-200'
+                  }`}
+                >
                   <label className="text-[10px] uppercase tracking-[0.18em] text-neutral-400 block">
                     Residence Type
                   </label>
@@ -374,7 +386,11 @@ export default function HeroShowcase({
 
                 <a
                   href="#buy-section"
-                  className="sm:col-span-3 py-3.5 px-4 bg-neutral-950 dark:bg-[#C5A059] text-white dark:text-neutral-950 text-[11px] font-semibold uppercase tracking-[0.18em] flex items-center justify-center gap-1.5 hover:opacity-90 transition-opacity"
+                  className={`sm:col-span-3 py-3.5 px-4 text-[11px] font-semibold uppercase tracking-[0.18em] flex items-center justify-center gap-1.5 hover:opacity-90 transition-opacity ${
+                    isDark
+                      ? 'bg-[#C5A059] text-neutral-950'
+                      : 'bg-neutral-950 text-white'
+                  }`}
                 >
                   <Search className="w-3.5 h-3.5" />
                   Search

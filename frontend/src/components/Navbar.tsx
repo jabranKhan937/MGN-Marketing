@@ -67,15 +67,15 @@ export default function Navbar({
         />
       </div>
 
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-10 h-20 flex items-center justify-between gap-6">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-2 xl:gap-5">
         {/* Left: Clean Single-Line Brand Identity */}
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => setActiveView('showcase')}
-          className="flex items-center gap-3.5 text-left group shrink-0"
+          className="flex items-center gap-3 text-left group shrink-0"
         >
-          <div className="w-11 h-11 rounded-xl overflow-hidden border border-[#C5A059]/50 bg-[#050A1F] flex items-center justify-center shadow-md shrink-0 relative luxury-sheen">
+          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl overflow-hidden border border-[#C5A059]/50 bg-[#050A1F] flex items-center justify-center shadow-md shrink-0 relative luxury-sheen">
             <img
               src="/mgn-logo.png"
               alt="MGN Marketing"
@@ -83,10 +83,10 @@ export default function Navbar({
             />
           </div>
           <div className="flex flex-col">
-            <span className="font-display font-bold text-lg tracking-[0.18em] uppercase leading-tight whitespace-nowrap group-hover:text-[#C5A059] transition-colors">
+            <span className="font-display font-bold text-base sm:text-lg tracking-[0.15em] uppercase leading-tight whitespace-nowrap group-hover:text-[#C5A059] transition-colors">
               MGN MARKETING
             </span>
-            <span className="text-[10px] tracking-[0.28em] uppercase text-[#C5A059] font-medium whitespace-nowrap mt-0.5">
+            <span className="text-[9px] sm:text-[10px] tracking-[0.24em] uppercase text-[#C5A059] font-medium whitespace-nowrap mt-0.5">
               DUBAI LUXURY REALTY
             </span>
           </div>
@@ -94,7 +94,7 @@ export default function Navbar({
 
         {/* Center: Uncramped Single-Line Navigation Links */}
         {activeView === 'showcase' ? (
-          <nav className="hidden lg:flex items-center gap-8 text-[11px] font-semibold uppercase tracking-[0.18em] whitespace-nowrap">
+          <nav className="hidden xl:flex items-center gap-5 2xl:gap-7 text-[11px] font-semibold uppercase tracking-[0.14em] whitespace-nowrap min-w-0">
             {[
               { href: '#buy-section', label: 'Buy' },
               { href: '#rentals-section', label: 'Rentals' },
@@ -117,11 +117,11 @@ export default function Navbar({
             ))}
           </nav>
         ) : (
-          <div className="hidden lg:block" />
+          <div className="hidden xl:block" />
         )}
 
         {/* Right: Sleek Single-Line Controls */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           {/* Clean Segmented Switcher with Animated Sliding Pill */}
           <div
             className={`p-1 rounded-full border flex items-center relative ${
@@ -137,7 +137,7 @@ export default function Navbar({
                 <button
                   key={item.id}
                   onClick={() => setActiveView(item.id)}
-                  className={`relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-semibold tracking-wider uppercase whitespace-nowrap transition-colors z-10 ${
+                  className={`relative flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-[10px] sm:text-[11px] font-semibold tracking-wider uppercase whitespace-nowrap transition-colors z-10 ${
                     isActive
                       ? 'text-neutral-950'
                       : 'opacity-70 hover:opacity-100'
@@ -150,7 +150,7 @@ export default function Navbar({
                       className="absolute inset-0 rounded-full bg-[#C5A059] shadow-sm -z-10"
                     />
                   )}
-                  <Icon className="w-3.5 h-3.5" />
+                  <Icon className="w-3.5 h-3.5 shrink-0" />
                   <span>{item.label}</span>
                 </button>
               );
@@ -161,7 +161,7 @@ export default function Navbar({
           <select
             value={currency}
             onChange={(e) => setCurrency(e.target.value as CurrencyCode)}
-            className={`hidden sm:block px-3 py-2 rounded-full border text-[11px] font-semibold tracking-wider uppercase cursor-pointer focus:outline-none transition-colors ${
+            className={`hidden sm:block px-2.5 py-1.5 rounded-full border text-[11px] font-semibold tracking-wider uppercase cursor-pointer focus:outline-none transition-colors ${
               isDark
                 ? 'bg-white/[0.04] border-white/10 text-neutral-200 hover:border-[#C5A059]/50'
                 : 'bg-neutral-100 border-neutral-200 text-neutral-800 hover:border-neutral-300'
@@ -187,7 +187,7 @@ export default function Navbar({
             whileTap={{ scale: 0.92 }}
             onClick={() => setIsDark(!isDark)}
             title="Toggle Theme"
-            className={`w-9 h-9 rounded-full border flex items-center justify-center transition-colors overflow-hidden ${
+            className={`w-9 h-9 rounded-full border flex items-center justify-center shrink-0 transition-colors overflow-hidden ${
               isDark
                 ? 'bg-white/[0.04] border-white/10 text-neutral-300 hover:border-[#C5A059]/50'
                 : 'bg-neutral-100 border-neutral-200 text-neutral-700 hover:bg-neutral-200/70'
@@ -212,14 +212,14 @@ export default function Navbar({
             whileHover={{ scale: 1.04, y: -1 }}
             whileTap={{ scale: 0.97 }}
             onClick={onOpenQuickInquiry}
-            className={`hidden md:flex items-center gap-1.5 px-5 py-2.5 rounded-full text-[11px] font-semibold uppercase tracking-[0.16em] whitespace-nowrap transition-colors luxury-sheen ${
+            className={`hidden md:flex items-center gap-1.5 px-4 py-2 rounded-full text-[11px] font-semibold uppercase tracking-[0.14em] whitespace-nowrap shrink-0 transition-colors luxury-sheen ${
               isDark
                 ? 'bg-white text-neutral-950 hover:bg-[#C5A059] hover:text-neutral-950'
                 : 'bg-neutral-900 text-white hover:bg-[#C5A059] hover:text-neutral-950'
             }`}
           >
             <span>Inquire</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
+            <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
           </motion.button>
         </div>
       </div>
