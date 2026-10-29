@@ -88,7 +88,7 @@ const leadSchema = new mongoose.Schema(
     },
     assignedAgent: {
       type: String,
-      default: 'Tariq Al Maktoum',
+      default: 'Gul Nawaz',
     },
     notes: {
       type: String,

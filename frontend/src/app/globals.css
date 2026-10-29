@@ -53,7 +53,7 @@ body {
     transform: scale(1) translate3d(0, 0, 0);
   }
   50% {
-    transform: scale(1.08) translate3d(-1%, -1%, 0);
+    transform: scale(1.09) translate3d(-1.5%, -1%, 0);
   }
   100% {
     transform: scale(1) translate3d(0, 0, 0);
@@ -61,7 +61,7 @@ body {
 }
 
 .animate-ken-burns {
-  animation: kenBurns 26s ease-in-out infinite;
+  animation: kenBurns 24s ease-in-out infinite;
 }
 
 /* Infinite Partner Marquee */
@@ -77,11 +77,112 @@ body {
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marqueeScroll 32s linear infinite;
+  animation: marqueeScroll 30s linear infinite;
 }
 
 .animate-marquee:hover {
   animation-play-state: paused;
+}
+
+/* Luxury Card Gold Sheen Sweep on Hover */
+.luxury-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.luxury-sheen::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(212, 175, 55, 0.16) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(25deg);
+  transition: left 0.85s cubic-bezier(0.19, 1, 0.22, 1);
+  pointer-events: none;
+}
+
+.luxury-sheen:hover::after {
+  left: 135%;
+}
+
+/* Subtle Floating Animation */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float-slow {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+/* Scroll Indicator Line Animation */
+@keyframes scrollDrop {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(200%);
+    opacity: 0;
+  }
+}
+
+.animate-scroll-drop {
+  animation: scrollDrop 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+/* Subtle Gold Glow Pulse */
+@keyframes goldPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(197, 160, 89, 0);
+  }
+}
+
+.animate-gold-pulse {
+  animation: goldPulse 2.8s infinite;
+}
+
+/* Animated Underline Sweep for Nav & Editorial Links */
+.hover-gold-underline {
+  position: relative;
+}
+
+.hover-gold-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: linear-gradient(90deg, #C5A059, #F3E5AB, #C5A059);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hover-gold-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 /* Custom Scrollbar */

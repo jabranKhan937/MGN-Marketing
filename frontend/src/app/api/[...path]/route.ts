@@ -146,7 +146,7 @@ export async function POST(req: NextRequest) {
       stage: 'New Inquiry',
       priority: 'VIP / High',
       nationality: 'UAE',
-      assignedAgent: 'Tariq Al Maktoum',
+      assignedAgent: 'Gul Nawaz',
       ...body,
     };
     memoryStore.leads.unshift(newLead);

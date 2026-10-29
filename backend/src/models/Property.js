@@ -102,7 +102,7 @@ const propertySchema = new mongoose.Schema(
     },
     assignedAgentName: {
       type: String,
-      default: 'Tariq Al Maktoum',
+      default: 'Gul Nawaz',
     },
     assignedAgentPhone: {
       type: String,

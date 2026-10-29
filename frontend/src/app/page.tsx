@@ -17,12 +17,13 @@ import {
   OverviewAnalytics,
 } from '@/types';
 import { CurrencyCode, apiRequest } from '@/lib/api';
-import { Sparkles, X, Send, CheckCircle2 } from 'lucide-react';
+import { X, Send, CheckCircle2 } from 'lucide-react';
 
 export default function HomePage() {
   const [activeView, setActiveView] = useState<'showcase' | 'clients' | 'portal'>('showcase');
   const [currency, setCurrency] = useState<CurrencyCode>('AED');
-  const [isDark, setIsDark] = useState(true);
+  // Default to Luxhabitat's signature crisp editorial light aesthetic (can toggle to Dark anytime)
+  const [isDark, setIsDark] = useState(false);
 
   const [properties, setProperties] = useState<Property[]>([]);
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -41,7 +42,7 @@ export default function HomePage() {
     phone: '',
     nationality: 'United Kingdom',
     budgetAED: 8000000,
-    interestedCommunity: 'Downtown Dubai',
+    interestedCommunity: 'Palm Jumeirah',
   });
   const [inquirySent, setInquirySent] = useState(false);
 
@@ -89,7 +90,7 @@ export default function HomePage() {
           purpose: 'Investment / High ROI',
           priority: 'VIP / High',
           source: 'Website VIP Concierge',
-          notes: quickNote || 'Direct VIP Advisory consultation request.',
+          notes: quickNote || 'Direct Private Office inquiry.',
         }),
       });
       setInquirySent(true);
@@ -102,7 +103,7 @@ export default function HomePage() {
   return (
     <div
       className={`min-h-screen transition-colors duration-300 ${
-        isDark ? 'bg-[#070A12] text-slate-100' : 'bg-[#FAF7F0] text-slate-900'
+        isDark ? 'bg-[#0A0A0A] text-neutral-100' : 'bg-white text-neutral-900'
       }`}
     >
       <Navbar
@@ -173,49 +174,52 @@ export default function HomePage() {
       {/* Quick VIP Consultation Modal */}
       {quickInquiryOpen && (
         <div
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={() => setQuickInquiryOpen(false)}
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-lg rounded-3xl bg-slate-950 border border-amber-500/40 p-7 text-white relative shadow-2xl"
+            className={`w-full max-w-lg border p-8 relative shadow-2xl ${
+              isDark
+                ? 'bg-[#111111] border-neutral-800 text-white'
+                : 'bg-white border-neutral-200 text-neutral-900'
+            }`}
           >
             <button
               onClick={() => setQuickInquiryOpen(false)}
-              className="absolute top-5 right-5 p-2 rounded-full bg-slate-900 text-slate-400 hover:text-white"
+              className="absolute top-5 right-5 p-2 opacity-60 hover:opacity-100"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="flex items-center gap-3 mb-3">
+            <div className="flex items-center gap-3.5 mb-5">
               <img
                 src="/mgn-logo.png"
                 alt="MGN Marketing"
-                className="w-11 h-11 rounded-xl object-cover border border-amber-500/40"
+                className="w-11 h-11 rounded-lg object-cover border border-[#B89B5E]/40"
               />
               <div>
-                <div className="flex items-center gap-1.5 text-amber-400 text-xs font-bold uppercase tracking-widest">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  MGN Marketing Private Client Desk
+                <div className="text-[#B89B5E] text-[10px] font-semibold uppercase tracking-[0.22em]">
+                  MGN Marketing Private Client Office
                 </div>
-                <h3 className="font-display text-xl font-bold">
-                  Book Private Dubai Investment Advisory
+                <h3 className="font-display text-2xl font-normal">
+                  Private Property Inquiry
                 </h3>
               </div>
             </div>
 
             {inquirySent ? (
-              <div className="p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/40 text-center space-y-2">
-                <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto" />
-                <h4 className="font-bold text-lg">VIP Consultation Logged in MGN CRM</h4>
-                <p className="text-xs text-slate-300">
-                  Our Senior RERA Partner will reach out via WhatsApp/Phone within 15 minutes.
+              <div className="p-6 border border-emerald-500/30 bg-emerald-500/5 text-center space-y-2">
+                <CheckCircle2 className="w-9 h-9 text-emerald-500 mx-auto" />
+                <h4 className="font-display text-lg">Inquiry Registered</h4>
+                <p className="text-xs opacity-75">
+                  Our Senior Private Client Advisor will contact you via WhatsApp or Email shortly.
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleQuickInquirySubmit} className="space-y-3.5">
+              <form onSubmit={handleQuickInquirySubmit} className="space-y-4">
                 {quickNote && (
-                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-300">
+                  <div className="p-3 border border-[#B89B5E]/30 bg-[#B89B5E]/10 text-xs">
                     {quickNote}
                   </div>
                 )}
@@ -224,7 +228,11 @@ export default function HomePage() {
                   placeholder="Full Name *"
                   value={inquiryForm.fullName}
                   onChange={(e) => setInquiryForm({ ...inquiryForm, fullName: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-sm"
+                  className={`w-full px-4 py-3 border text-sm focus:outline-none ${
+                    isDark
+                      ? 'bg-neutral-950 border-neutral-800'
+                      : 'bg-[#F8F7F4] border-neutral-300'
+                  }`}
                 />
                 <div className="grid grid-cols-2 gap-3">
                   <input
@@ -233,14 +241,22 @@ export default function HomePage() {
                     placeholder="Email Address *"
                     value={inquiryForm.email}
                     onChange={(e) => setInquiryForm({ ...inquiryForm, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-sm"
+                    className={`w-full px-4 py-3 border text-sm focus:outline-none ${
+                      isDark
+                        ? 'bg-neutral-950 border-neutral-800'
+                        : 'bg-[#F8F7F4] border-neutral-300'
+                    }`}
                   />
                   <input
                     required
                     placeholder="Phone / WhatsApp *"
                     value={inquiryForm.phone}
                     onChange={(e) => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-sm"
+                    className={`w-full px-4 py-3 border text-sm focus:outline-none ${
+                      isDark
+                        ? 'bg-neutral-950 border-neutral-800'
+                        : 'bg-[#F8F7F4] border-neutral-300'
+                    }`}
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
@@ -249,10 +265,16 @@ export default function HomePage() {
                     onChange={(e) =>
                       setInquiryForm({ ...inquiryForm, interestedCommunity: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-sm"
+                    className={`w-full px-4 py-3 border text-sm focus:outline-none ${
+                      isDark
+                        ? 'bg-neutral-950 border-neutral-800'
+                        : 'bg-[#F8F7F4] border-neutral-300'
+                    }`}
                   >
-                    <option>Downtown Dubai</option>
                     <option>Palm Jumeirah</option>
+                    <option>Downtown Dubai</option>
+                    <option>Emirates Hills</option>
+                    <option>Al Barari</option>
                     <option>Dubai Marina</option>
                     <option>Business Bay</option>
                     <option>Dubai Hills Estate</option>
@@ -264,14 +286,22 @@ export default function HomePage() {
                     onChange={(e) =>
                       setInquiryForm({ ...inquiryForm, budgetAED: Number(e.target.value) })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-sm"
+                    className={`w-full px-4 py-3 border text-sm focus:outline-none ${
+                      isDark
+                        ? 'bg-neutral-950 border-neutral-800'
+                        : 'bg-[#F8F7F4] border-neutral-300'
+                    }`}
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+                  className={`w-full py-3.5 text-xs uppercase tracking-[0.2em] font-semibold flex items-center justify-center gap-2 transition-colors ${
+                    isDark
+                      ? 'bg-[#B89B5E] text-neutral-950 hover:bg-[#c8aa6c]'
+                      : 'bg-neutral-900 text-white hover:bg-neutral-800'
+                  }`}
                 >
-                  <Send className="w-4 h-4" /> Submit to MGN Executive Desk
+                  <Send className="w-3.5 h-3.5" /> Submit Inquiry
                 </button>
               </form>
             )}
@@ -279,41 +309,113 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* Luxury Footer */}
-      <footer
-        className={`border-t py-12 mt-16 text-xs ${
-          isDark
-            ? 'bg-slate-950 border-slate-800/80 text-slate-400'
-            : 'bg-slate-900 border-slate-800 text-slate-300'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            <img
-              src="/mgn-logo.png"
-              alt="MGN Marketing Logo"
-              className="w-12 h-12 rounded-xl object-cover border border-amber-500/40 shrink-0"
-            />
-            <div>
-              <span className="font-display font-bold text-base gold-shimmer">
-                MGN MARKETING DUBAI REAL ESTATE LLC
-              </span>
-              <p className="mt-0.5 opacity-75">
-                Owners & Managing Partners: <strong>Gul Nawaz</strong> & <strong>Jibran Khan</strong> • Downtown Dubai, UAE • RERA ORN #31940
+      {/* ==================== LUXHABITAT-STYLE ARCHITECTURAL FOOTER ==================== */}
+      <footer className="bg-[#0A0A0A] text-neutral-400 border-t border-neutral-800 pt-16 pb-12 text-xs">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-neutral-800">
+            {/* Brand Column */}
+            <div className="lg:col-span-2 space-y-4">
+              <div className="flex items-center gap-3.5">
+                <img
+                  src="/mgn-logo.png"
+                  alt="MGN Marketing Logo"
+                  className="w-12 h-12 rounded-lg object-cover border border-[#B89B5E]/40 shrink-0"
+                />
+                <div>
+                  <span className="font-display font-bold text-lg tracking-[0.16em] text-white block">
+                    MGN MARKETING
+                  </span>
+                  <span className="text-[10px] tracking-[0.24em] uppercase text-[#B89B5E] block">
+                    DUBAI LUXURY REAL ESTATE
+                  </span>
+                </div>
+              </div>
+              <p className="text-xs leading-relaxed text-neutral-400 max-w-sm font-light">
+                Connecting discerning global buyers and tenants with Dubai&apos;s finest luxury
+                villas, penthouses, waterfront mansions, and architectural developments.
+              </p>
+              <p className="text-[11px] text-neutral-500">
+                Boulevard Plaza Tower 1, Level 24, Downtown Dubai, UAE • RERA ORN #31940
               </p>
             </div>
+
+            {/* Luxury Villas */}
+            <div className="space-y-2.5">
+              <h4 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white mb-3">
+                Luxury Villas
+              </h4>
+              <ul className="space-y-2 text-neutral-400">
+                <li>Palm Jumeirah Villas</li>
+                <li>Emirates Hills Estates</li>
+                <li>Al Barari Botanical Villas</li>
+                <li>Dubai Hills Golf Mansions</li>
+                <li>Palm Jebel Ali Fronds</li>
+                <li>Jumeirah Bay Island</li>
+              </ul>
+            </div>
+
+            {/* Penthouses & Developments */}
+            <div className="space-y-2.5">
+              <h4 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white mb-3">
+                Iconic Developments
+              </h4>
+              <ul className="space-y-2 text-neutral-400">
+                <li>Muraba Veil Residences</li>
+                <li>Atlantis The Royal</li>
+                <li>Bulgari Lighthouse</li>
+                <li>Bugatti Residences</li>
+                <li>The Lana Dorchester</li>
+                <li>One Za&apos;abeel</li>
+              </ul>
+            </div>
+
+            {/* MGN Platform Links */}
+            <div className="space-y-2.5">
+              <h4 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white mb-3">
+                MGN Platform
+              </h4>
+              <ul className="space-y-2">
+                <li>
+                  <button
+                    onClick={() => setActiveView('showcase')}
+                    className="hover:text-white transition-colors"
+                  >
+                    Luxury Showroom
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => setActiveView('clients')}
+                    className="hover:text-white transition-colors"
+                  >
+                    Clients &amp; Leads Directory
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => setActiveView('portal')}
+                    className="hover:text-white transition-colors"
+                  >
+                    Enterprise Business OS
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => handleOpenQuickInquiry()}
+                    className="hover:text-white transition-colors"
+                  >
+                    List Your Property
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="flex items-center gap-6">
-            <button onClick={() => setActiveView('showcase')} className="hover:text-amber-400">
-              Public Showcase
-            </button>
-            <button onClick={() => setActiveView('clients')} className="hover:text-amber-400">
-              Clients & Leads
-            </button>
-            <button onClick={() => setActiveView('portal')} className="hover:text-amber-400">
-              Enterprise Business OS
-            </button>
-            <span>© {new Date().getFullYear()} MGN Marketing</span>
+
+          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-neutral-500">
+            <span>
+              © {new Date().getFullYear()} MGN Marketing Dubai Real Estate LLC. All rights reserved.
+            </span>
+            <span>DLD &amp; RERA Certified Luxury Property Portal • Dubai, UAE</span>
           </div>
         </div>
       </footer>

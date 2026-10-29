@@ -75,7 +75,7 @@ export default function ManagementPortal({
     areaSqFt: 2850,
     roiEstimate: 8.8,
     completionYear: 'Q4 2027',
-    assignedAgentName: 'Tariq Al-Mansoori',
+    assignedAgentName: 'Gul Nawaz',
     image:
       'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80',
   });
@@ -91,7 +91,7 @@ export default function ManagementPortal({
     interestedCommunity: 'Palm Jumeirah',
     purpose: 'Investment / High ROI',
     priority: 'VIP / High',
-    assignedAgent: 'Tariq Al-Mansoori',
+    assignedAgent: 'Gul Nawaz',
     source: 'Instagram Luxury Ads',
   });
 
@@ -103,7 +103,7 @@ export default function ManagementPortal({
     developer: 'Emaar Properties',
     buyerName: '',
     buyerNationality: 'Switzerland',
-    agentName: 'Tariq Al-Mansoori',
+    agentName: 'Gul Nawaz',
     dealType: 'Off-Plan Developer Sale',
     saleValueAED: 14500000,
     commissionPercent: 4,
@@ -134,7 +134,7 @@ export default function ManagementPortal({
     clientEmail: 'vip@investor.com',
     propertyTitle: 'Burj Crown Sky Penthouse',
     community: 'Downtown Dubai',
-    agentName: 'Tariq Al-Mansoori',
+    agentName: 'Gul Nawaz',
     viewingType: 'In-Person VIP Chauffeur',
     scheduledDate: '2026-11-05',
     scheduledTime: '16:00 GST',
