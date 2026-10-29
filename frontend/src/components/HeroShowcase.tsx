@@ -383,17 +383,39 @@ export default function HeroShowcase({
             </motion.div>
           </div>
 
-          {/* Slide Progress Indicators */}
-          <div className="flex items-center gap-2.5 mt-8">
-            {HERO_SLIDES.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveSlide(idx)}
-                className={`h-[2px] transition-all duration-500 ${
-                  activeSlide === idx ? 'w-14 bg-[#C5A059]' : 'w-6 bg-white/30 hover:bg-white/60'
-                }`}
-              />
-            ))}
+          {/* Slide Progress Indicators & Scroll Indicator */}
+          <div className="flex items-center justify-between mt-8">
+            <div className="flex items-center gap-2.5">
+              {HERO_SLIDES.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveSlide(idx)}
+                  className={`relative h-[2px] overflow-hidden transition-all duration-500 ${
+                    activeSlide === idx ? 'w-16 bg-white/25' : 'w-6 bg-white/30 hover:bg-white/60'
+                  }`}
+                >
+                  {activeSlide === idx && (
+                    <motion.span
+                      key={`progress-${activeSlide}`}
+                      initial={{ width: '0%' }}
+                      animate={{ width: '100%' }}
+                      transition={{ duration: 6.5, ease: 'linear' }}
+                      className="block h-full bg-[#C5A059]"
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+
+            <a
+              href="#buy-section"
+              className="hidden sm:flex items-center gap-3 text-[10px] uppercase tracking-[0.26em] text-white/75 hover:text-[#C5A059] transition-colors"
+            >
+              <span>Scroll to Explore</span>
+              <span className="w-[1px] h-7 bg-white/20 overflow-hidden relative inline-block">
+                <span className="w-full h-3 bg-[#C5A059] block animate-scroll-drop" />
+              </span>
+            </a>
           </div>
         </div>
       </section>
@@ -435,7 +457,13 @@ export default function HeroShowcase({
               <h2 className="font-display text-3xl sm:text-5xl font-normal leading-[1.15] tracking-tight">
                 Discover exceptional luxury homes in Dubai.
               </h2>
-              <div className="w-20 h-[2px] bg-[#C5A059] mt-6" />
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: 80 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className="h-[2px] bg-[#C5A059] mt-6"
+              />
             </div>
 
             <div className={`lg:col-span-7 space-y-5 text-sm sm:text-base leading-relaxed font-light ${mutedText}`}>
@@ -476,11 +504,16 @@ export default function HeroShowcase({
                 key={stat.label}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -4 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.55, delay: idx * 0.1 }}
-                className="space-y-1"
+                className={`p-5 border transition-colors ${
+                  isDark
+                    ? 'bg-[#0E0E0E] border-neutral-800/80 hover:border-[#C5A059]/50'
+                    : 'bg-[#FAF9F6] border-neutral-200/80 hover:border-[#C5A059]'
+                } space-y-1`}
               >
-                <p className="font-display text-3xl sm:text-4xl font-normal text-[#B89B5E]">
+                <p className="font-display text-3xl sm:text-4xl font-normal gold-shimmer">
                   {stat.value}
                 </p>
                 <span className={`text-xs uppercase tracking-[0.16em] block ${mutedText}`}>
@@ -540,16 +573,25 @@ export default function HeroShowcase({
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => setSelectedCommunity(comm)}
-                className={`px-4 py-2 text-xs uppercase tracking-[0.14em] border transition-all ${
+                className={`relative px-4 py-2 text-xs uppercase tracking-[0.14em] border transition-colors z-10 ${
                   active
                     ? isDark
-                      ? 'bg-[#C5A059] text-neutral-950 border-[#C5A059] font-semibold shadow-md'
-                      : 'bg-neutral-900 text-white border-neutral-900 font-semibold shadow-md'
+                      ? 'text-neutral-950 border-[#C5A059] font-semibold'
+                      : 'text-white border-neutral-900 font-semibold'
                     : isDark
                     ? 'border-neutral-800 text-neutral-400 hover:border-neutral-600 hover:text-white'
                     : 'border-neutral-200 text-neutral-600 hover:border-neutral-400 hover:text-neutral-900'
                 }`}
               >
+                {active && (
+                  <motion.span
+                    layoutId="activeCommunityFilter"
+                    transition={{ type: 'spring', stiffness: 360, damping: 28 }}
+                    className={`absolute inset-0 -z-10 shadow-md ${
+                      isDark ? 'bg-[#C5A059]' : 'bg-neutral-900'
+                    }`}
+                  />
+                )}
                 {comm}
               </motion.button>
             );

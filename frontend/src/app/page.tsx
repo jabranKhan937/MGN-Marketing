@@ -17,7 +17,8 @@ import {
   OverviewAnalytics,
 } from '@/types';
 import { CurrencyCode, apiRequest } from '@/lib/api';
-import { X, Send, CheckCircle2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Send, CheckCircle2, Sparkles } from 'lucide-react';
 
 export default function HomePage() {
   const [activeView, setActiveView] = useState<'showcase' | 'clients' | 'portal'>('showcase');
@@ -116,52 +117,86 @@ export default function HomePage() {
         onOpenQuickInquiry={() => handleOpenQuickInquiry()}
       />
 
-      {activeView === 'showcase' ? (
-        <main>
-          <HeroShowcase
-            properties={properties}
-            agents={agents}
-            currency={currency}
-            isDark={isDark}
-            onSelectProperty={(p) => setSelectedProperty(p)}
-            onOpenPortal={() => setActiveView('portal')}
-            onOpenClients={() => setActiveView('clients')}
-            onOpenQuickInquiry={handleOpenQuickInquiry}
-          />
+      <AnimatePresence mode="wait">
+        {activeView === 'showcase' ? (
+          <motion.main
+            key="showcase"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <HeroShowcase
+              properties={properties}
+              agents={agents}
+              currency={currency}
+              isDark={isDark}
+              onSelectProperty={(p) => setSelectedProperty(p)}
+              onOpenPortal={() => setActiveView('portal')}
+              onOpenClients={() => setActiveView('clients')}
+              onOpenQuickInquiry={handleOpenQuickInquiry}
+            />
 
-          <RoiMortgageCalculator
-            currency={currency}
-            isDark={isDark}
-            onRequestAdvisory={(summary) => handleOpenQuickInquiry(summary)}
-          />
-        </main>
-      ) : activeView === 'clients' ? (
-        <main>
-          <ClientLeadsWorkspace
-            leads={leads}
-            agents={agents}
-            properties={properties}
-            currency={currency}
-            isDark={isDark}
-            onRefreshAll={fetchAllData}
-          />
-        </main>
-      ) : (
-        <main>
-          <ManagementPortal
-            overview={overview}
-            properties={properties}
-            leads={leads}
-            deals={deals}
-            agents={agents}
-            campaigns={campaigns}
-            viewings={viewings}
-            currency={currency}
-            isDark={isDark}
-            onRefreshAll={fetchAllData}
-          />
-        </main>
-      )}
+            <RoiMortgageCalculator
+              currency={currency}
+              isDark={isDark}
+              onRequestAdvisory={(summary) => handleOpenQuickInquiry(summary)}
+            />
+          </motion.main>
+        ) : activeView === 'clients' ? (
+          <motion.main
+            key="clients"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <ClientLeadsWorkspace
+              leads={leads}
+              agents={agents}
+              properties={properties}
+              currency={currency}
+              isDark={isDark}
+              onRefreshAll={fetchAllData}
+            />
+          </motion.main>
+        ) : (
+          <motion.main
+            key="portal"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <ManagementPortal
+              overview={overview}
+              properties={properties}
+              leads={leads}
+              deals={deals}
+              agents={agents}
+              campaigns={campaigns}
+              viewings={viewings}
+              currency={currency}
+              isDark={isDark}
+              onRefreshAll={fetchAllData}
+            />
+          </motion.main>
+        )}
+      </AnimatePresence>
+
+      {/* Floating Private Concierge Button */}
+      <motion.button
+        initial={{ opacity: 0, scale: 0.8, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ delay: 0.8, duration: 0.5 }}
+        whileHover={{ scale: 1.05, y: -2 }}
+        whileTap={{ scale: 0.96 }}
+        onClick={() => handleOpenQuickInquiry('VIP Private Concierge Consultation')}
+        className="fixed bottom-6 right-6 z-40 px-5 py-3.5 rounded-full bg-[#111111] text-white border border-[#C5A059]/60 shadow-2xl flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] hover:bg-[#C5A059] hover:text-neutral-950 transition-colors animate-gold-pulse"
+      >
+        <Sparkles className="w-3.5 h-3.5 text-[#C5A059] group-hover:text-neutral-950" />
+        <span>VIP Concierge</span>
+      </motion.button>
 
       {/* Property Detail & Instant CRM Lead Modal */}
       <PropertyDetailModal
@@ -172,19 +207,27 @@ export default function HomePage() {
       />
 
       {/* Quick VIP Consultation Modal */}
-      {quickInquiryOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
-          onClick={() => setQuickInquiryOpen(false)}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className={`w-full max-w-lg border p-8 relative shadow-2xl ${
-              isDark
-                ? 'bg-[#111111] border-neutral-800 text-white'
-                : 'bg-white border-neutral-200 text-neutral-900'
-            }`}
+      <AnimatePresence>
+        {quickInquiryOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setQuickInquiryOpen(false)}
           >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 20 }}
+              transition={{ type: 'spring', damping: 26, stiffness: 280 }}
+              onClick={(e) => e.stopPropagation()}
+              className={`w-full max-w-lg border p-8 relative shadow-2xl ${
+                isDark
+                  ? 'bg-[#111111] border-neutral-800 text-white'
+                  : 'bg-white border-neutral-200 text-neutral-900'
+              }`}
+            >
             <button
               onClick={() => setQuickInquiryOpen(false)}
               className="absolute top-5 right-5 p-2 opacity-60 hover:opacity-100"
@@ -305,9 +348,10 @@ export default function HomePage() {
                 </button>
               </form>
             )}
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ==================== LUXHABITAT-STYLE ARCHITECTURAL FOOTER ==================== */}
       <footer className="bg-[#0A0A0A] text-neutral-400 border-t border-neutral-800 pt-16 pb-12 text-xs">
