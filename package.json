@@ -1,0 +1,17 @@
+{
+  "name": "mgn-marketing-dubai",
+  "version": "1.0.0",
+  "description": "MGN Marketing - Luxury Dubai Real Estate & All-in-One Business Management Platform",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"yellow,cyan\" \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\"",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "start": "concurrently \"npm --prefix backend start\" \"npm --prefix frontend start\"",
+    "seed": "npm --prefix backend run seed"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
