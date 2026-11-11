@@ -25,6 +25,7 @@ interface HeroShowcaseProps {
   onSelectProperty: (property: Property) => void;
   onOpenPortal: () => void;
   onOpenClients?: () => void;
+  onOpenLeads?: () => void;
   onOpenQuickInquiry: (defaultNote?: string) => void;
 }
 
@@ -174,6 +175,7 @@ export default function HeroShowcase({
   isDark,
   onSelectProperty,
   onOpenClients,
+  onOpenLeads,
   onOpenQuickInquiry,
 }: HeroShowcaseProps) {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -323,7 +325,17 @@ export default function HeroShowcase({
                       onClick={onOpenClients}
                       className="px-6 py-3.5 bg-black/50 backdrop-blur-md border border-white/30 text-white text-xs font-semibold uppercase tracking-[0.18em] hover:bg-white hover:text-neutral-950 transition-all"
                     >
-                      Clients &amp; Leads Desk
+                      Clients Desk
+                    </motion.button>
+                  )}
+                  {onOpenLeads && (
+                    <motion.button
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={onOpenLeads}
+                      className="px-6 py-3.5 bg-[#C5A059]/90 backdrop-blur-md border border-[#C5A059] text-neutral-950 text-xs font-semibold uppercase tracking-[0.18em] hover:bg-white hover:border-white transition-all shadow-xl"
+                    >
+                      Leads Database (13,760+)
                     </motion.button>
                   )}
                 </div>

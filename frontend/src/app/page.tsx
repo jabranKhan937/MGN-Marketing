@@ -7,6 +7,7 @@ import RoiMortgageCalculator from '@/components/RoiMortgageCalculator';
 import PropertyDetailModal from '@/components/PropertyDetailModal';
 import ManagementPortal from '@/components/ManagementPortal';
 import ClientLeadsWorkspace from '@/components/ClientLeadsWorkspace';
+import ExcelLeadsDirectory from '@/components/ExcelLeadsDirectory';
 import {
   Property,
   Lead,
@@ -21,7 +22,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, CheckCircle2, Sparkles } from 'lucide-react';
 
 export default function HomePage() {
-  const [activeView, setActiveView] = useState<'showcase' | 'clients' | 'portal'>('showcase');
+  const [activeView, setActiveView] = useState<'showcase' | 'clients' | 'leads' | 'portal'>('showcase');
   const [currency, setCurrency] = useState<CurrencyCode>('AED');
   // Default to MGN Marketing's signature luxury dark theme (can toggle to Light anytime)
   const [isDark, setIsDark] = useState(true);
@@ -140,6 +141,7 @@ export default function HomePage() {
               onSelectProperty={(p) => setSelectedProperty(p)}
               onOpenPortal={() => setActiveView('portal')}
               onOpenClients={() => setActiveView('clients')}
+              onOpenLeads={() => setActiveView('leads')}
               onOpenQuickInquiry={handleOpenQuickInquiry}
             />
 
@@ -165,6 +167,16 @@ export default function HomePage() {
               isDark={isDark}
               onRefreshAll={fetchAllData}
             />
+          </motion.main>
+        ) : activeView === 'leads' ? (
+          <motion.main
+            key="leads"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <ExcelLeadsDirectory isDark={isDark} />
           </motion.main>
         ) : (
           <motion.main
@@ -438,7 +450,15 @@ export default function HomePage() {
                     onClick={() => setActiveView('clients')}
                     className="hover:text-white transition-colors"
                   >
-                    Clients &amp; Leads Directory
+                    Clients Directory
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => setActiveView('leads')}
+                    className="hover:text-white transition-colors"
+                  >
+                    Master Leads Database (13,760+)
                   </button>
                 </li>
                 <li>

@@ -6,6 +6,7 @@ import {
   Building2,
   LayoutDashboard,
   Users,
+  FileSpreadsheet,
   Sun,
   Moon,
   ArrowUpRight,
@@ -13,8 +14,8 @@ import {
 import { CurrencyCode } from '@/lib/api';
 
 interface NavbarProps {
-  activeView: 'showcase' | 'clients' | 'portal';
-  setActiveView: (view: 'showcase' | 'clients' | 'portal') => void;
+  activeView: 'showcase' | 'clients' | 'leads' | 'portal';
+  setActiveView: (view: 'showcase' | 'clients' | 'leads' | 'portal') => void;
   currency: CurrencyCode;
   setCurrency: (c: CurrencyCode) => void;
   isDark: boolean;
@@ -39,12 +40,13 @@ export default function Navbar({
   });
 
   const navItems: {
-    id: 'showcase' | 'clients' | 'portal';
+    id: 'showcase' | 'clients' | 'leads' | 'portal';
     label: string;
     icon: React.ComponentType<{ className?: string }>;
   }[] = [
     { id: 'showcase', label: 'Portfolio', icon: Building2 },
     { id: 'clients', label: 'Clients', icon: Users },
+    { id: 'leads', label: 'Leads', icon: FileSpreadsheet },
     { id: 'portal', label: 'Portal', icon: LayoutDashboard },
   ];
 
